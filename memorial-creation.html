@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Memorial - Memorial</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/memorial.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-heart nav-icon"></i>
+                <span class="nav-title">Memorial</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <button class="btn btn-secondary" onclick="saveProgress()">Save progress</button>
+                <button class="btn btn-primary" onclick="previewMemorial()">Preview memorial</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="memorial-creation">
+        <div class="container">
+            <!-- Progress Steps -->
+            <div class="progress-steps">
+                <div class="step-indicator active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <span>Share memories</span>
+                </div>
+                <div class="step-indicator" data-step="2">
+                    <div class="step-circle">2</div>
+                    <span>Configure voice</span>
+                </div>
+                <div class="step-indicator" data-step="3">
+                    <div class="step-circle">3</div>
+                    <span>Test & refine</span>
+                </div>
+            </div>
+
+            <!-- Step 1: Share Memories -->
+            <div class="creation-step active" data-step="1">
+                <div class="step-header">
+                    <h2>Share memories of <span id="loved-one-name-display">your loved one</span></h2>
+                    <p>Help us understand their personality, voice, and way of communicating by sharing different types of content.</p>
+                </div>
+
+                <div class="memory-upload-grid">
+                    <!-- Text Messages -->
+                    <div class="upload-card">
+                        <div class="upload-icon">
+                            <i class="fas fa-comment-dots"></i>
+                        </div>
+                        <h3>Text Messages</h3>
+                        <p>Share text messages, emails, or written communications</p>
+                        <div class="upload-area" data-type="text">
+                            <i class="fas fa-plus"></i>
+                            <span>Add text content</span>
+                        </div>
+                        <div class="uploaded-items" id="text-items"></div>
+                    </div>
+
+                    <!-- Voice Recordings -->
+                    <div class="upload-card">
+                        <div class="upload-icon">
+                            <i class="fas fa-microphone"></i>
+                        </div>
+                        <h3>Voice Recordings</h3>
+                        <p>Upload audio files or record their voice directly</p>
+                        <div class="upload-area" data-type="voice">
+                            <i class="fas fa-plus"></i>
+                            <span>Add voice recordings</span>
+                        </div>
+                        <div class="uploaded-items" id="voice-items"></div>
+                    </div>
+
+                    <!-- Photos & Videos -->
+                    <div class="upload-card">
+                        <div class="upload-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <h3>Photos & Videos</h3>
+                        <p>Visual memories that capture their personality</p>
+                        <div class="upload-area" data-type="media">
+                            <i class="fas fa-plus"></i>
+                            <span>Add photos/videos</span>
+                        </div>
+                        <div class="uploaded-items" id="media-items"></div>
+                    </div>
+
+                    <!-- Written Content -->
+                    <div class="upload-card">
+                        <div class="upload-icon">
+                            <i class="fas fa-file-text"></i>
+                        </div>
+                        <h3>Letters & Documents</h3>
+                        <p>Personal letters, journals, or any written content</p>
+                        <div class="upload-area" data-type="documents">
+                            <i class="fas fa-plus"></i>
+                            <span>Add documents</span>
+                        </div>
+                        <div class="uploaded-items" id="document-items"></div>
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <button class="btn btn-secondary" onclick="skipStep()">Skip for now</button>
+                    <button class="btn btn-primary" onclick="nextStep()" id="next-step-1" disabled>
+                        Continue to voice setup
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Configure Voice -->
+            <div class="creation-step" data-step="2">
+                <div class="step-header">
+                    <h2>Configure their voice</h2>
+                    <p>Set up how their voice will sound in conversations. We'll use the recordings you provided to create their unique voice.</p>
+                </div>
+
+                <div class="voice-configuration">
+                    <div class="voice-preview-card">
+                        <div class="avatar-large">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="voice-controls">
+                            <h3>Voice Preview</h3>
+                            <p>Listen to how their voice will sound</p>
+                            <div class="voice-sample">
+                                <button class="btn btn-secondary voice-play" onclick="playVoiceSample()">
+                                    <i class="fas fa-play"></i>
+                                    Play sample
+                                </button>
+                                <div class="voice-waveform">
+                                    <span></span><span></span><span></span><span></span><span></span>
+                                    <span></span><span></span><span></span><span></span><span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="voice-settings">
+                        <div class="setting-group">
+                            <label>Voice tone</label>
+                            <div class="setting-options">
+                                <button class="setting-option active" data-tone="warm">Warm</button>
+                                <button class="setting-option" data-tone="gentle">Gentle</button>
+                                <button class="setting-option" data-tone="confident">Confident</button>
+                                <button class="setting-option" data-tone="playful">Playful</button>
+                            </div>
+                        </div>
+
+                        <div class="setting-group">
+                            <label>Speaking pace</label>
+                            <div class="slider-container">
+                                <span class="slider-label">Slow</span>
+                                <input type="range" id="pace-slider" min="0.5" max="1.5" step="0.1" value="1">
+                                <span class="slider-label">Fast</span>
+                            </div>
+                        </div>
+
+                        <div class="setting-group">
+                            <label>Voice clarity</label>
+                            <div class="slider-container">
+                                <span class="slider-label">Soft</span>
+                                <input type="range" id="clarity-slider" min="0.3" max="1" step="0.1" value="0.7">
+                                <span class="slider-label">Clear</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <button class="btn btn-secondary" onclick="previousStep()">
+                        <i class="fas fa-arrow-left"></i>
+                        Back
+                    </button>
+                    <button class="btn btn-primary" onclick="nextStep()">
+                        Test conversation
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Test & Refine -->
+            <div class="creation-step" data-step="3">
+                <div class="step-header">
+                    <h2>Test your memorial</h2>
+                    <p>Have a conversation to see how everything feels. You can always adjust settings later.</p>
+                </div>
+
+                <div class="conversation-test">
+                    <!-- Avatar Display -->
+                    <div class="avatar-conversation">
+                        <div class="avatar-container">
+                            <div class="avatar-circle">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="avatar-status">
+                                <div class="status-dot"></div>
+                                <span>Ready to talk</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Chat Interface -->
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chat-messages">
+                            <div class="message assistant">
+                                <div class="message-content">
+                                    <p>Hello, it's so good to hear from you. How are you doing today?</p>
+                                </div>
+                                <div class="message-actions">
+                                    <button class="voice-toggle" onclick="toggleVoice(this)">
+                                        <i class="fas fa-volume-up"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="chat-input-container">
+                            <div class="input-options">
+                                <button class="input-mode active" data-mode="text" onclick="setInputMode('text')">
+                                    <i class="fas fa-keyboard"></i>
+                                    Text
+                                </button>
+                                <button class="input-mode" data-mode="voice" onclick="setInputMode('voice')">
+                                    <i class="fas fa-microphone"></i>
+                                    Voice
+                                </button>
+                            </div>
+                            
+                            <div class="chat-input-area">
+                                <div class="text-input active">
+                                    <input type="text" id="message-input" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                                    <button class="send-btn" onclick="sendMessage()">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                                
+                                <div class="voice-input">
+                                    <button class="voice-record-btn" onclick="toggleVoiceRecording()">
+                                        <i class="fas fa-microphone"></i>
+                                        <span>Hold to speak</span>
+                                    </button>
+                                    <div class="voice-indicator">
+                                        <span></span><span></span><span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step-actions">
+                    <button class="btn btn-secondary" onclick="previousStep()">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to voice settings
+                    </button>
+                    <button class="btn btn-primary" onclick="completeMemorial()">
+                        <i class="fas fa-heart"></i>
+                        Complete memorial
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Upload Modal -->
+    <div id="upload-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="upload-modal-title">Add Content</h2>
+                <button class="modal-close" onclick="closeUploadModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="upload-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Processing Modal -->
+    <div id="processing-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="processing-animation">
+                    <div class="spinner"></div>
+                </div>
+                <h3>Creating your memorial...</h3>
+                <p>This may take a few moments as we process your memories and configure the AI.</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <p class="progress-text" id="progress-text">Analyzing personality traits...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/memorial-creation.js"></script>
+</body>
+</html>

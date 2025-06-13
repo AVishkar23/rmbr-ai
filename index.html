@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memorial - Stay Connected with Loved Ones</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-heart nav-icon"></i>
+                <span class="nav-title">Memorial</span>
+            </div>
+            <div class="nav-links">
+                <a href="#how-it-works" class="nav-link">How it works</a>
+                <a href="#privacy" class="nav-link">Privacy</a>
+                <button class="btn btn-primary" onclick="startMemorial()">Start remembering</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Stay connected with<br>
+                    <span class="highlight">those you love</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Create a digital memorial where you can talk, listen, and share memories 
+                    with loved ones who have passed away. Through voice, text, and digital presence.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary btn-large" onclick="startMemorial()">
+                        <i class="fas fa-heart"></i>
+                        Create memorial
+                    </button>
+                    <button class="btn btn-secondary btn-large" onclick="showDemo()">
+                        <i class="fas fa-play"></i>
+                        See how it works
+                    </button>
+                </div>
+                <div class="hero-trust">
+                    <p class="trust-text">Private and secure • No data shared • Built with care</p>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="memorial-card">
+                    <div class="avatar-placeholder">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="conversation-preview">
+                        <div class="message-bubble">
+                            <p>"I'm so proud of the person you've become..."</p>
+                        </div>
+                        <div class="voice-indicator">
+                            <i class="fas fa-volume-up"></i>
+                            <div class="sound-waves">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section id="how-it-works" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Simple process, meaningful connection</h2>
+                <p>Three steps to create a lasting digital memorial</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Share memories</h3>
+                        <p>Upload photos, voice recordings, messages, or any content that captures their personality and voice.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>AI learns their essence</h3>
+                        <p>Our AI carefully learns their communication style, voice patterns, and personality traits.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Start conversations</h3>
+                        <p>Talk through text or voice with your digital memorial. Share feelings, ask questions, find comfort.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section section-light">
+        <div class="container">
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Text conversations</h3>
+                    <p>Write messages and receive responses that feel authentic and comforting.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3>Voice interactions</h3>
+                    <p>Hear their voice again through advanced voice synthesis technology.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h3>Digital presence</h3>
+                    <p>Visual avatar that represents their personality and provides a sense of presence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy -->
+    <section id="privacy" class="section">
+        <div class="container">
+            <div class="privacy-content">
+                <div class="privacy-text">
+                    <h2>Your memories are sacred</h2>
+                    <p>We understand the deeply personal nature of grief and memory. That's why privacy and security are at the core of everything we do.</p>
+                    <ul class="privacy-list">
+                        <li><i class="fas fa-shield-alt"></i> End-to-end encryption for all data</li>
+                        <li><i class="fas fa-lock"></i> Your data is never shared or sold</li>
+                        <li><i class="fas fa-server"></i> Secure cloud storage with backups</li>
+                        <li><i class="fas fa-trash"></i> Delete your data anytime</li>
+                    </ul>
+                </div>
+                <div class="privacy-visual">
+                    <div class="security-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Bank-level security</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to stay connected?</h2>
+                <p>Create a memorial space where love continues beyond loss.</p>
+                <button class="btn btn-primary btn-large" onclick="startMemorial()">
+                    <i class="fas fa-heart"></i>
+                    Create your memorial
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <i class="fas fa-heart"></i>
+                    <span>Memorial</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#privacy">Privacy</a>
+                    <a href="#support">Support</a>
+                    <a href="#about">About</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Memorial. Built with care for those who remember.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Memorial Creation Modal -->
+    <div id="memorial-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create a memorial</h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="memorial-form">
+                    <div class="form-step active" data-step="1">
+                        <h3>Tell us about your loved one</h3>
+                        <div class="form-group">
+                            <label for="loved-one-name">What was their name?</label>
+                            <input type="text" id="loved-one-name" placeholder="Their first name">
+                        </div>
+                        <div class="form-group">
+                            <label for="relationship">What was your relationship?</label>
+                            <select id="relationship">
+                                <option value="">Select relationship</option>
+                                <option value="parent">Parent</option>
+                                <option value="spouse">Spouse/Partner</option>
+                                <option value="child">Child</option>
+                                <option value="sibling">Sibling</option>
+                                <option value="grandparent">Grandparent</option>
+                                <option value="friend">Friend</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-primary" onclick="nextStep()">Continue</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-step" data-step="2">
+                        <h3>How would you like to connect?</h3>
+                        <div class="connection-options">
+                            <div class="option" onclick="selectOption('text')">
+                                <i class="fas fa-comments"></i>
+                                <h4>Text conversations</h4>
+                                <p>Start with written messages</p>
+                            </div>
+                            <div class="option" onclick="selectOption('voice')">
+                                <i class="fas fa-microphone"></i>
+                                <h4>Voice & text</h4>
+                                <p>Include voice recordings</p>
+                            </div>
+                            <div class="option" onclick="selectOption('full')">
+                                <i class="fas fa-user-circle"></i>
+                                <h4>Complete memorial</h4>
+                                <p>Text, voice, and digital avatar</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
