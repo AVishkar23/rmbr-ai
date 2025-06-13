@@ -25,6 +25,13 @@ npm install
 4. Create a new API key
 5. Copy the key (starts with `sk-`)
 
+#### A2E.ai API Keys
+1. Go to [A2E.ai](https://video.a2e.ai/)
+2. Sign up for an account
+3. Go to your account settings
+4. Copy your API ID and API Key
+5. Free tier includes avatar generation and voice cloning
+
 ### 3. Configure Environment Variables
 
 Create a `.env` file in the root directory:
@@ -33,6 +40,11 @@ Create a `.env` file in the root directory:
 # API Keys
 ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
 OPENAI_API_KEY=your_openai_api_key_here
+
+# A2E.ai Configuration
+A2E_API_ID=your_a2e_api_id_here
+A2E_API_KEY=your_a2e_api_key_here
+A2E_BASE_URL=https://video.a2e.ai
 
 # Server Configuration
 PORT=3000
@@ -77,52 +89,75 @@ Rmbr AI/
 - `GET /api/health` - Health check
 - `POST /api/clone-voice` - Clone voice using ElevenLabs
 - `POST /api/chat` - Generate AI response with voice synthesis
-- `GET /api/voices` - Get available voices
+- `GET /api/voices` - Get available ElevenLabs voices
+- `POST /api/analyze-personality` - Analyze personality from text
+- `POST /api/store-memory` - Store memories for context
+- `GET /api/memories/:sessionId` - Get stored memories
+- `POST /api/process-onboarding` - Process onboarding responses
+
+#### A2E.ai API Routes
+- `POST /api/a2e/clone-voice` - Clone voice using A2E.ai
+- `POST /api/a2e/tts` - Generate speech using A2E.ai TTS
+- `POST /api/a2e/generate-avatar` - Generate avatar video
+- `GET /api/a2e/avatar-status/:taskId` - Check avatar generation status
+- `GET /api/a2e/voices` - Get available A2E.ai voices
+- `GET /api/a2e/avatars` - Get available A2E.ai avatars
 
 ### Example API Usage
 
 #### Clone Voice
-```javascript
-const formData = new FormData();
-formData.append('audio', audioFile);
 
-const response = await fetch('http://localhost:3000/api/clone-voice', {
-    method: 'POST',
-    body: formData
-});
-
-const data = await response.json();
-// Returns: { success: true, voice_id: "voice_12345" }
+```bash
+curl -X POST http://localhost:3000/api/clone-voice \
+  -F "audio=@path/to/audio.mp3"
 ```
 
-#### Chat with AI
-```javascript
-const response = await fetch('http://localhost:3000/api/chat', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        message: "Hello, how are you?",
-        voiceId: "voice_12345",
-        personalityContext: "You are a caring mother figure"
-    })
-});
+#### A2E.ai Voice Cloning
 
-const data = await response.json();
-// Returns: { success: true, response: "I'm doing well, thank you!", audio_url: "data:audio/mpeg;base64,..." }
+```bash
+curl -X POST http://localhost:3000/api/a2e/clone-voice \
+  -F "audio=@path/to/video.mp4"
+```
+
+#### A2E.ai Avatar Generation
+
+```bash
+curl -X POST http://localhost:3000/api/a2e/generate-avatar \
+  -H "Content-Type: application/json" \
+  -d '{
+    "text": "Hello, this is a test message for avatar generation",
+    "avatarId": "your_avatar_id"
+  }'
+```
+
+#### A2E.ai Text-to-Speech
+
+```bash
+curl -X POST http://localhost:3000/api/a2e/tts \
+  -H "Content-Type: application/json" \
+  -d '{
+    "text": "Hello, this is a test message",
+    "voiceId": "your_voice_id"
+  }'
 ```
 
 ## 💰 Cost Estimation
 
 ### ElevenLabs
-- **Free Tier**: 10,000 characters/month
-- **Paid Plans**: Starting at $5/month for 30,000 characters
-- **Voice Cloning**: Free (included in character limit)
+- **Free tier**: 10,000 characters/month
+- **Starter**: $5/month (30,000 characters)
+- **Creator**: $22/month (100,000 characters)
+- **Pro**: $99/month (500,000 characters)
+
+### A2E.ai
+- **Free tier**: Limited avatar generations and voice cloning
+- **Starter**: Check their pricing page for current rates
+- **Pro**: Advanced features and higher limits
+- **Enterprise**: Custom pricing for large-scale usage
 
 ### OpenAI
-- **GPT-4**: ~$0.03 per 1K input tokens, $0.06 per 1K output tokens
-- **Typical conversation**: ~$0.01-0.05 per exchange
+- **GPT-4**: $0.03 per 1K tokens (input), $0.06 per 1K tokens (output)
+- **GPT-3.5-turbo**: $0.0015 per 1K tokens (input), $0.002 per 1K tokens (output)
 
 ### Monthly Estimate
 - **Light usage** (100 conversations): $5-15

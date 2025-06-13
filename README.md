@@ -21,6 +21,13 @@ Rmbr AI is more than just another chatbot. It's a deeply human tool for emotiona
 - **Interactive Elements**: Hover effects, button animations, and smooth scrolling
 - **Mobile-First**: Optimized for mobile devices with hamburger menu
 - **Performance Optimized**: Fast loading with minimal dependencies
+- 🎤 **Voice Cloning**: Clone voices using ElevenLabs or A2E.ai technology
+- 🤖 **AI Conversations**: Natural conversations powered by OpenAI's GPT-4
+- 🎭 **Avatar Generation**: Create talking avatars with A2E.ai
+- 📝 **Personality Analysis**: Understand communication patterns from text
+- 🧠 **Memory System**: Store and recall important memories and context
+- 🎯 **Contextual Responses**: Relevant responses based on stored memories
+- 🌐 **Real-time Audio**: Instant voice synthesis for responses
 
 ## 🎨 Design Elements
 
@@ -40,13 +47,20 @@ Rmbr AI/
 └── README.md           # Project documentation
 ```
 
-## 🛠️ Technologies Used
+## � Tech Stack
 
-- **HTML5**: Semantic markup structure
-- **CSS3**: Modern styling with Grid, Flexbox, and animations
-- **JavaScript (ES6+)**: Interactive functionality and animations
-- **Font Awesome**: Icon library
-- **Google Fonts**: Inter font family
+**Frontend:**
+- HTML5 with semantic structure
+- CSS3 with custom properties and animations
+- Vanilla JavaScript with modern ES6+ features
+- Responsive design with mobile-first approach
+
+**Backend:**
+- Node.js with Express.js framework
+- ElevenLabs API for voice cloning and synthesis
+- A2E.ai API for avatar generation and advanced voice features
+- OpenAI API for intelligent conversations
+- Multer for file upload handling
 
 ## 🚀 Getting Started
 
