@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Companion - Rmbr AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="companion-creation.css">
+</head>
+<body>
+    <!-- Ambient Background -->
+    <div class="ambient-background">
+        <div class="clouds"></div>
+        <div class="clouds clouds-2"></div>
+        <div class="clouds clouds-3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo" onclick="window.location.href='index-new.html'">
+                <div class="logo-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <span>Rmbr AI</span>
+            </div>
+            <div class="nav-progress">
+                <div class="progress-tracker">
+                    <div class="progress-stage active" data-stage="setup">
+                        <i class="fas fa-cog"></i>
+                        <span>Setup</span>
+                    </div>
+                    <div class="progress-stage" data-stage="conversation">
+                        <i class="fas fa-comments"></i>
+                        <span>Conversation</span>
+                    </div>
+                    <div class="progress-stage" data-stage="media">
+                        <i class="fas fa-microphone"></i>
+                        <span>Media</span>
+                    </div>
+                    <div class="progress-stage" data-stage="complete">
+                        <i class="fas fa-check"></i>
+                        <span>Complete</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="creation-container">
+        <!-- Welcome Screen -->
+        <div id="welcome-screen" class="screen active">
+            <div class="welcome-content">
+                <div class="companion-type-header">
+                    <div class="type-icon" id="type-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h1 id="type-title">Create Your Companion</h1>
+                    <p id="type-description">Let's start building your AI companion</p>
+                </div>
+                
+                <div class="interface-options">
+                    <h2>Choose Your Interface</h2>
+                    <p>Select how you'd like to interact with your companion</p>
+                    
+                    <div class="interface-grid">
+                        <div class="interface-option" onclick="selectInterface('text')">
+                            <div class="interface-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h3>Text Chat</h3>
+                            <p>Conversational AI that asks questions to understand the person</p>
+                            <div class="option-features">
+                                <span>Easy Setup</span>
+                                <span>Quick Start</span>
+                            </div>
+                        </div>
+                        
+                        <div class="interface-option" onclick="selectInterface('voice')">
+                            <div class="interface-icon">
+                                <i class="fas fa-microphone"></i>
+                            </div>
+                            <h3>Voice Chat</h3>
+                            <p>Talk to them physically with voice recordings and interactions</p>
+                            <div class="option-features">
+                                <span>Voice Cloning</span>
+                                <span>Natural Speech</span>
+                            </div>
+                        </div>
+                        
+                        <div class="interface-option" onclick="selectInterface('avatar')">
+                            <div class="interface-icon">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <h3>Realistic Avatar</h3>
+                            <p>Visual companion with photo-based avatar generation</p>
+                            <div class="option-features">
+                                <span>Photo Upload</span>
+                                <span>Visual Interaction</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Interface -->
+        <div id="chat-interface" class="screen">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="chat-info">
+                        <h2 id="chat-title">Setting Up Your Companion</h2>
+                        <p id="chat-subtitle">I'll ask you some questions to understand the person better</p>
+                    </div>
+                    <div class="progress-indicator">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <span id="progress-text">0% Complete</span>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Messages will be dynamically added here -->
+                </div>
+
+                <div class="chat-input-container">
+                    <div class="input-wrapper">
+                        <textarea 
+                            id="user-input" 
+                            placeholder="Share your thoughts..." 
+                            rows="1"
+                        ></textarea>
+                        <button class="send-button" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Media Upload Modal -->
+        <div id="media-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="media-title">Add Media</h3>
+                    <button class="close-modal" onclick="closeMediaModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="media-options" id="media-options">
+                        <!-- Dynamic media options based on companion type and interface -->
+                    </div>
+                    <div class="media-upload-area" id="media-upload-area" style="display: none;">
+                        <div class="upload-zone" id="upload-zone">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drop your file here or click to browse</p>
+                            <input type="file" id="file-input" accept="image/*,video/*,audio/*" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="skip-button" onclick="skipMediaUpload()">Skip for now</button>
+                    <button class="continue-button" onclick="continueToNextStage()">Continue</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Completion Screen -->
+        <div id="completion-screen" class="screen">
+            <div class="completion-content">
+                <div class="completion-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h1>Your Companion is Ready!</h1>
+                <p id="completion-message">We've successfully created your AI companion. You can now start meaningful conversations.</p>
+                <div class="completion-actions">
+                    <button class="primary-button" onclick="startConversation()">
+                        <span>Start Conversation</span>
+                        <i class="fas fa-comments"></i>
+                    </button>
+                    <button class="secondary-button" onclick="createAnother()">
+                        <span>Create Another</span>
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Player for Voice Features -->
+    <audio id="voice-audio" style="display: none;"></audio>
+
+    <!-- Load Scripts -->
+    <script src="companion-creation.js"></script>
+</body>
+</html> 
