@@ -59,7 +59,7 @@ const OPENAI_BASE_URL = 'https://api.openai.com/v1';
 
 // A2E.ai API Configuration
 const A2E_API_TOKEN = process.env.A2E_API_TOKEN;
-const A2E_BASE_URL = process.env.A2E_BASE_URL || 'https://video.a2e.ai';
+const A2E_BASE_URL = process.env.A2E_BASE_URL || 'https://api.a2e.ai';
 
 // Routes
 
