@@ -11,8 +11,7 @@ const path = require('path');
 console.log('=== ENVIRONMENT VARIABLES DEBUG ===');
 console.log('ELEVENLABS_API_KEY:', process.env.ELEVENLABS_API_KEY ? 'FOUND' : 'NOT FOUND');
 console.log('OPENAI_API_KEY:', process.env.OPENAI_API_KEY ? 'FOUND' : 'NOT FOUND');
-console.log('A2E_API_ID:', process.env.A2E_API_ID ? 'FOUND' : 'NOT FOUND');
-console.log('A2E_API_KEY:', process.env.A2E_API_KEY ? 'FOUND' : 'NOT FOUND');
+console.log('A2E_API_TOKEN:', process.env.A2E_API_TOKEN ? 'FOUND' : 'NOT FOUND');
 console.log('Current working directory:', process.cwd());
 console.log('Files in current directory:', require('fs').readdirSync('.'));
 console.log('===================================');
@@ -59,8 +58,7 @@ const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const OPENAI_BASE_URL = 'https://api.openai.com/v1';
 
 // A2E.ai API Configuration
-const A2E_API_ID = process.env.A2E_API_ID;
-const A2E_API_KEY = process.env.A2E_API_KEY;
+const A2E_API_TOKEN = process.env.A2E_API_TOKEN;
 const A2E_BASE_URL = process.env.A2E_BASE_URL || 'https://video.a2e.ai';
 
 // Routes
@@ -514,8 +512,8 @@ app.post('/api/a2e/clone-voice', upload.single('audio'), async (req, res) => {
             return res.status(400).json({ error: 'No audio file provided' });
         }
 
-        if (!A2E_API_ID || !A2E_API_KEY) {
-            return res.status(500).json({ error: 'A2E.ai API credentials not configured' });
+        if (!A2E_API_TOKEN) {
+            return res.status(500).json({ error: 'A2E.ai API token not configured' });
         }
 
         // Create form data for A2E.ai voice cloning
@@ -528,12 +526,12 @@ app.post('/api/a2e/clone-voice', upload.single('audio'), async (req, res) => {
         // Call A2E.ai API to clone voice from video
         const response = await axios.post(`${A2E_BASE_URL}/api/v1/voice/clone`, formData, {
             headers: {
-                'Authorization': `Bearer ${A2E_API_KEY}`,
+                'Authorization': `Bearer ${A2E_API_TOKEN}`,
                 'Content-Type': 'multipart/form-data',
                 ...formData.getHeaders()
             },
             data: {
-                token: A2E_API_ID
+                token: A2E_API_TOKEN
             }
         });
 
@@ -571,18 +569,17 @@ app.post('/api/a2e/tts', async (req, res) => {
             return res.status(400).json({ error: 'Text is required' });
         }
 
-        if (!A2E_API_ID || !A2E_API_KEY) {
-            return res.status(500).json({ error: 'A2E.ai API credentials not configured' });
+        if (!A2E_API_TOKEN) {
+            return res.status(500).json({ error: 'A2E.ai API token not configured' });
         }
 
         // Call A2E.ai TTS API
-        const response = await axios.post(`${A2E_BASE_URL}/api/v1/tts`, {
+        const response = await axios.post(`${A2E_BASE_URL}/api/v1/tts/generate`, {
             text: text,
-            voice_id: voiceId,
-            token: A2E_API_ID
+            voice_id: voiceId || 'default'
         }, {
             headers: {
-                'Authorization': `Bearer ${A2E_API_KEY}`,
+                'Authorization': `Bearer ${A2E_API_TOKEN}`,
                 'Content-Type': 'application/json'
             },
             responseType: 'arraybuffer'
@@ -617,19 +614,18 @@ app.post('/api/a2e/generate-avatar', async (req, res) => {
             return res.status(400).json({ error: 'Text is required' });
         }
 
-        if (!A2E_API_ID || !A2E_API_KEY) {
-            return res.status(500).json({ error: 'A2E.ai API credentials not configured' });
+        if (!A2E_API_TOKEN) {
+            return res.status(500).json({ error: 'A2E.ai API token not configured' });
         }
 
         // Call A2E.ai Avatar API
-        const response = await axios.post(`${A2E_BASE_URL}/api/v1/lipsyncs/`, {
+        const response = await axios.post(`${A2E_BASE_URL}/api/v1/lipsyncs`, {
             text: text,
             creator_id: avatarId || 'default',
-            aspect_ratio: '16:9',
-            token: A2E_API_ID
+            aspect_ratio: '16:9'
         }, {
             headers: {
-                'Authorization': `Bearer ${A2E_API_KEY}`,
+                'Authorization': `Bearer ${A2E_API_TOKEN}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -657,18 +653,15 @@ app.get('/api/a2e/avatar-status/:taskId', async (req, res) => {
     try {
         const { taskId } = req.params;
 
-        if (!A2E_API_ID || !A2E_API_KEY) {
-            return res.status(500).json({ error: 'A2E.ai API credentials not configured' });
+        if (!A2E_API_TOKEN) {
+            return res.status(500).json({ error: 'A2E.ai API token not configured' });
         }
 
         // Check A2E.ai task status
-        const response = await axios.get(`${A2E_BASE_URL}/api/v1/lipsyncs/${taskId}/`, {
+        const response = await axios.get(`${A2E_BASE_URL}/api/v1/lipsyncs/${taskId}`, {
             headers: {
-                'Authorization': `Bearer ${A2E_API_KEY}`,
+                'Authorization': `Bearer ${A2E_API_TOKEN}`,
                 'Content-Type': 'application/json'
-            },
-            params: {
-                token: A2E_API_ID
             }
         });
 
@@ -696,18 +689,15 @@ app.get('/api/a2e/avatar-status/:taskId', async (req, res) => {
 // A2E.ai Available Voices
 app.get('/api/a2e/voices', async (req, res) => {
     try {
-        if (!A2E_API_ID || !A2E_API_KEY) {
-            return res.status(500).json({ error: 'A2E.ai API credentials not configured' });
+        if (!A2E_API_TOKEN) {
+            return res.status(500).json({ error: 'A2E.ai API token not configured' });
         }
 
-        // Get A2E.ai voices
-        const response = await axios.get(`${A2E_BASE_URL}/api/v1/voices/`, {
+        // Get A2E.ai voices using the correct endpoint
+        const response = await axios.get(`${A2E_BASE_URL}/api/v1/voices`, {
             headers: {
-                'Authorization': `Bearer ${A2E_API_KEY}`,
+                'Authorization': `Bearer ${A2E_API_TOKEN}`,
                 'Content-Type': 'application/json'
-            },
-            params: {
-                token: A2E_API_ID
             }
         });
 
@@ -729,16 +719,14 @@ app.get('/api/a2e/voices', async (req, res) => {
 // A2E.ai Avatar List
 app.get('/api/a2e/avatars', async (req, res) => {
     try {
-        if (!A2E_API_ID || !A2E_API_KEY) {
-            return res.status(500).json({ error: 'A2E.ai API credentials not configured' });
+        if (!A2E_API_TOKEN) {
+            return res.status(500).json({ error: 'A2E.ai API token not configured' });
         }
 
-        // Get A2E.ai avatars
-        const response = await axios.post(`${A2E_BASE_URL}/api/v1/avatars/`, {
-            token: A2E_API_ID
-        }, {
+        // Get A2E.ai avatars using POST method as per documentation
+        const response = await axios.post(`${A2E_BASE_URL}/api/v1/avatars`, {}, {
             headers: {
-                'Authorization': `Bearer ${A2E_API_KEY}`,
+                'Authorization': `Bearer ${A2E_API_TOKEN}`,
                 'Content-Type': 'application/json'
             }
         });
@@ -1026,8 +1014,8 @@ app.listen(PORT, () => {
         console.warn('⚠️  OpenAI API key not found. AI conversations will not work.');
     }
     
-    if (!A2E_API_ID || !A2E_API_KEY) {
-        console.warn('⚠️  A2E.ai API credentials not found. A2E.ai features will not work.');
+    if (!A2E_API_TOKEN) {
+        console.warn('⚠️  A2E.ai API token not found. A2E.ai features will not work.');
     } else {
         console.log('✅ A2E.ai API configured successfully.');
     }
